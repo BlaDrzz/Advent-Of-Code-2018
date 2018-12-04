@@ -11,7 +11,7 @@ class Action
      */
     private $action;
     /**
-     * @var DateTime
+     * @var \DateTime
      */
     private $dateTime;
     /**
@@ -21,11 +21,11 @@ class Action
 
     public function __construct(string $action, Guard $guard)
     {
-        if (strpos($action, self::WAKE_UP)) {
+        if (\strpos($action, self::WAKE_UP)) {
             $this->action = self::WAKE_UP;
-        } elseif (strpos($action, self::FALL_ASLEEP)) {
+        } elseif (\strpos($action, self::FALL_ASLEEP)) {
             $this->action = self::FALL_ASLEEP;
-        } elseif (strpos($action, self::BEGIN_SHIFT)) {
+        } elseif (\strpos($action, self::BEGIN_SHIFT)) {
             $this->action = self::BEGIN_SHIFT;
         } else {
             $this->action = 'INVALID ACTION';
@@ -40,7 +40,7 @@ class Action
         return $this->action;
     }
 
-    public function getDateTime(): DateTime
+    public function getDateTime(): \DateTime
     {
         return $this->dateTime;
     }
@@ -52,7 +52,7 @@ class Action
 
     public static function extractDateFromActionString(string $action): \DateTime
     {
-        $dateBit = substr($action, 1, strpos($action, ']') - 1);
-        return DateTime::createFromFormat('Y-m-d H:i', $dateBit);
+        $dateBit = \substr($action, 1, \strpos($action, ']') - 1);
+        return \DateTime::createFromFormat('Y-m-d H:i', $dateBit);
     }
 }

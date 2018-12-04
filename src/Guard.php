@@ -102,12 +102,12 @@ class Guard
 
     public static function extractIdFromActionString(string $action): ?int
     {
-        $hash = strpos($action, '#');
+        $hash = \strpos($action, '#');
         if ($hash === false) {
             return null;
         }
 
-        $firstBit = substr($action, $hash + 1);
-        return (int)substr($firstBit, 0, strlen($firstBit) - strpos(' ', $firstBit));
+        $firstBit = \substr($action, $hash + 1);
+        return (int)\substr($firstBit, 0, \strlen($firstBit) - \strpos(' ', $firstBit));
     }
 }
