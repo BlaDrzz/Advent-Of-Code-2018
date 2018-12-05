@@ -2,6 +2,8 @@
 
 const BR = '<br/>';
 
+$start = microtime(true);
+
 class DayFive
 {
     private $input;
@@ -40,15 +42,10 @@ class DayFive
 
     public function executePartTwo(): int
     {
-        $strippedPolymers = array_map(function (string $character) {
-            return $this->removeCharactersRegardlesOfCase($character, $this->input);
-        }, range('a', 'z'));
-
-        $lengthsAfterReduction = array_map(function (string $polymer) {
-            return \strlen($this->recursivelyRemovePolarity($polymer));
-        }, $strippedPolymers);
-
-        return \min($lengthsAfterReduction);
+        return \min(array_map(function (string $character) {
+            $strippedPolymer = $this->removeCharactersRegardlesOfCase($character, $this->input);
+            return \strlen($this->recursivelyRemovePolarity($strippedPolymer));
+        }, range('a', 'z')));
     }
 
     private function removeCharactersRegardlesOfCase(string $character, string $string): string
@@ -62,4 +59,5 @@ class DayFive
 
 $dayFive = new DayFive();
 echo 'PART ONE: ' . $dayFive->executePartOne() . BR;
-echo 'PART TWO: ' . $dayFive->executePartTwo();
+echo 'PART TWO: ' . $dayFive->executePartTwo(). BR . BR;
+echo 'OPERATION TOOK: ' . (microtime(true) - $start) . 's';
