@@ -22,18 +22,19 @@ class DayFive
     private function recursivelyRemovePolarity(string $polymer): string
     {
         $arrToRemove = [];
+        $count = 0;
         for ($i = 0; $i < \strlen($polymer) - 1; $i++) {
             if (abs(ord($polymer[$i]) - ord($polymer[$i + 1])) === 32) {
                 $arrToRemove[] = $polymer[$i] . $polymer[$i + 1];
+                $count++;
             }
         }
 
         foreach ($arrToRemove as $toRemove) {
-            $count = 0;
-            $polymer = str_replace($toRemove, '', $polymer, $count);
+            $polymer = str_replace($toRemove, '', $polymer);
         }
 
-        if (\count($arrToRemove) !== 0) {
+        if ($count > 0) {
             $polymer = $this->recursivelyRemovePolarity($polymer);
         }
 
@@ -43,8 +44,9 @@ class DayFive
     public function executePartTwo(): int
     {
         return \min(array_map(function (string $character) {
-            $strippedPolymer = $this->removeCharactersRegardlesOfCase($character, $this->input);
-            return \strlen($this->recursivelyRemovePolarity($strippedPolymer));
+            return \strlen($this->recursivelyRemovePolarity(
+                $this->removeCharactersRegardlesOfCase($character, $this->input)
+            ));
         }, range('a', 'z')));
     }
 
